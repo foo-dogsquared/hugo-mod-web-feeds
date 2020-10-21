@@ -1,0 +1,20 @@
+# Configuring with this theme component reduces the user configuration.
+# Though, the user is still encourage to skim this configuration to know what configuration this component has set.
+
+# RSS configuration
+[mediatypes."application/rss+xml"]
+    suffixes = [ "rss", "rss.xml" ]
+[outputFormats.RSS]
+    mediaType = "application/rss+xml"
+
+# Atom configuration
+[mediatypes."application/atom+xml"]
+    suffixes = [ "atom", "atom.xml" ]
+[outputFormats.Atom]
+    mediaType = "application/atom+xml"
+
+# JSON feed configuration
+[mediatypes."application/feed+json"]
+    suffixes = [ "json", "feed.json" ]
+[outputFormats.JSON]
+    mediaType = "application/feed+json"

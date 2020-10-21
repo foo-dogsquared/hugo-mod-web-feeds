@@ -1,0 +1,155 @@
+= hugo-web-feeds
+:toc:
+
+
+A Hugo theme component for containing most of the web feeds such as https://cyber.harvard.edu/rss/rss.html[RSS], https://tools.ietf.org/html/rfc4287[Atom], and https://jsonfeed.org/[JSON] feed.
+
+NOTE: The following example snippets are in TOML format.
+Be sure to convert it first into the appropriate format if you're using other than TOML.
+
+
+
+
+== Getting started
+
+To get started using {doctitle}, here is the section giving you a headstart.
+
+
+=== Installation
+
+==== The theme folder
+
+You can simply copy the project into your theme folder (e.g., `themes/web-feeds`).
+Then, simply specify the theme component to be used in the site configuration.
+Since this is a theme component, you're not going to use this as a standalone theme.
+
+[source, toml]
+----
+theme = [ "web-feeds" "$THEME" ]
+----
+
+
+==== Hugo module
+
+As a prerequisite, you also need Hugo v0.56 and above (as long as it has the Hugo module feature) and the latest version of https://golang.org/dl/[Go].
+
+First, you need to initialize your Hugo project as a Hugo module.
+This can be done by running `hugo mod init $HUGO_MODULE_PATH`.
+
+Then, you can add the theme component as a Hugo module by adding the following snippet in your site configuration.
+
+[source, toml]
+----
+[module]
+  [[module.imports]]
+    path = "github.com/foo-dogsquared/hugo-web-feeds"
+----
+
+You can also specify the tag by adding `@$TAG` at the end of the path.
+For more information, you can see https://github.com/golang/go/wiki/Modules#how-to-upgrade-and-downgrade-dependencies[how to specify Go modules] since Hugo modules are built on top of it.
+
+Next, get the dependency by running `hugo mod get`.
+Note that this will update the created `go.mod` file.
+To update the theme component, run `hugo mod get -u`.
+
+
+=== Using it in the Hugo site
+
+Now that you have the theme component in the Hugo project, you have to actually use it.
+Although, the theme component does configure some of the stuff for you, it only set the media types and whatnot.
+
+To make the feeds actually appear in your site, you have to set it from your site configuration.
+
+[source, toml]
+----
+# Visit the following for more information:
+# https://gohugo.io/templates/output-formats
+# Including all of the feed output formats in the build
+[outputFormats]
+    [outputFormats.RSS]
+        mediaType = "application/rss+xml"
+        baseName = "feed"
+
+    [outputFormats.Atom]
+        mediaType = "application/atom+xml"
+        baseName = "feed"
+
+    [outputFormats.JSON]
+        mediaType = "application/feed+json"
+        baseName = "feed"
+
+
+# Indicating what output formats shall be included for the following kinds
+[outputs]
+    # .Site.BaseURL/$basename.* is available
+    home = ["HTML", "JSON", "RSS", "ATOM"]
+
+    # .Site.BaseURL/$section/$basename.* is available
+    section = ["HTML", "JSON", "RSS", "ATOM"]
+----
+
+In the above snippet, it sets the site to name the output feeds as `feed` and set to create feeds for the homepage and section templates.
+The resulting templates can be accessed in the homepage at `$BASE_URL/feed.json`, `$BASE_URL/feed.atom`, `$BASE_URL/feed.rss` for JSON, Atom, and RSS feeds, respectively.
+
+
+
+
+== Use cases
+
+The theme template is made for my custom Hugo themes that mostly share the same settings.
+
+For clarification, the following list points all assumptions that this theme component makes.
+
+* Multiple authors are supported.
+In the context of site configuration, it is `$.Site.Author` containing a map of authors along with certain key and values.
+
+** `name` specifies the name of the author and it is a required key.
+** `email` (optional) is the author's email.
+** `url` (optional) is the author's URL for its website.
+** `img` (optional) contains the image URL of the profile picture of the author.
+
+* It provides the whole content of the documents in the list entries of each feed.
+This is made for personal reasons that I believe it should be best for the user to provide the full content rather than redirecting them to a website.
+footnote:[Redirecting them with a "Read more" link still has valid reasons such as different newsreader may have different rendering affecting the user experience so it is best to redirect them with a full-on web browser.]
+
+* Custom parameters are present in the templates though used minimally.
+
+** `$.Site.Params.mainSections` (list of strings) assumes the sections to be included in the homepage feed.
+** `$POST.Params.hidden` (boolean) indicates if a post is to be hidden in the feed.
+** `$POST.Params.tags` (list of strings) lists the categories to be listed in the feed (if it has any).
+
+* Images are assumed to be in hardcoded path.
+
+It does not cover all use case so it is recommended to vendor it if it doesn't fit your use case with the default.
+
+* If you're using the theme folder, you're all set except replacing the origin with your own (e.g., `git remote add origin $YOUR_GIT_REPO`).
+* For Hugo modules, run `hugo mod vendor` where it will be stored at `_vendor` in your Hugo project.
+
+
+
+
+== References
+
+The feed templates was created with the following documents:
+
+* https://tools.ietf.org/html/rfc4287[Atom 1.0 - IETF RFC4287]
+* https://www.jsonfeed.org/version/1.1[JSON Feed v1.1]
+* https://www.rssboard.org/rss-2-0-1[RSS 2.0.1 specifications]
+
+Some validation was done for the resulting output of the templates:
+
+* For RSS and Atom feeds, it was validated with https://validator.w3.org/feed/[W3C validator service] where it gave a pass with flying colors (aside from little cautions given from the result).
+
+// TODO: Create a JSON schema for the v1.1 spec?
+* As of 2020-10-21, JSON feeds are yet to be validated since the https://validator.jsonfeed.org/[validator] is not yet updated with the latest version (v1.1).
+However, the previous version of the template using the v1.0 spec did pass the validation.
+The update is pretty small so I have confidence this will work.
+
+
+
+
+== Acknowledgements
+
+* Julian Pawlowski having https://github.com/jpawlowski/hugo-web-feeds[a similarly named project] for the inspiration. ;p
+* The team and community behind https://gohugo.io/[Hugo] for creating a great project that is maintained in top condition for a very long time.
+
