@@ -1,0 +1,22 @@
+= Changelog
+:toc:
+
+
+All notable changes to this project will be documented in this file.
+
+The format is based on https://keepachangelog.com/en/1.0.0/[Keep a Changelog],
+and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+
+
+
+== [0.0.1] - 2020-10-21
+
+=== Added
+
+* The CHANGELOG file even though this is overkill for such a small project.
+* RSS feed template based on https://www.rssboard.org/rss-2-0-1[RSS v2.0.1 spec].
+* Atom feed template based on https://tools.ietf.org/html/rfc4287[IETF RFC4287].
+* JSON feed template as indicated from its https://www.jsonfeed.org/version/1.1[version 1.1 specifications].
+* README covering most of the things needed to get a quick jump including installation with either the theme folder or Hugo modules, use cases, and references for future references.
+
