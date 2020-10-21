@@ -19,4 +19,5 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 * Atom feed template based on https://tools.ietf.org/html/rfc4287[IETF RFC4287].
 * JSON feed template as indicated from its https://www.jsonfeed.org/version/1.1[version 1.1 specifications].
 * README covering most of the things needed to get a quick jump including installation with either the theme folder or Hugo modules, use cases, and references for future references.
+* License the project under MIT open license.
 

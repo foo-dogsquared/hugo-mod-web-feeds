@@ -1,11 +1,14 @@
 {{- /*
-The reference used to create this template is at https://cyber.harvard.edu/rss/rss.html.
+The reference used to create this template is at https://www.rssboard.org/rss-2-0-1.
 The template does miss out on certain things which I put it on a list for those who are interested:
    * Since there's no standard for multiple authors (with <author>) in the <item> element, I decided it would be best to leave it out for now.
    * The name was left out for certain elements that requires an email address (like <managingEditor>, <webMaster>, or <author> in the <item>.
    * <item:guid> is a permalink to the HTML post.
    * No <item:enclosure>.
    * <item:description> contains the whole post; if you want to change it to <item:content:encoded> and make <item:description> a summarized version, refer to https://www.rssboard.org/rss-profile and change the description tag with `.Summary | safeHTML`.
+
+Also, the specification is vague or at least lacking.
+The Atom specification, despite the terseness, is clearer than this which is why I recommend it more than this format.
 */ -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>" | safeHTML }}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -19,18 +22,14 @@ The template does miss out on certain things which I put it on a list for those 
         <language>{{.}}</language>
     {{- end -}}
 
-    {{- if .Site.Author.email }}
-        <managingEditor>{{ .Site.Author.email }} ({{ .Site.Author.name }})</managingEditor>
-        <webMaster>{{ .Site.Author.email }} ({{ .Site.Author.name }})</webMaster>
-    {{- end -}}
     <copyright>{{ with .Site.Copyright }}{{ . }}{{ else }}© {{ now.Year }} to the author(s) behind {{ .Site.Title }}{{ end }}</copyright>
     {{- if not .Date.IsZero }}
         <lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
     {{- end }}
     <docs>https://www.rssboard.org/rss-2-0-1</docs>
-    {{ with .OutputFormats.Get "RSS" }}
+    {{- with .OutputFormats.Get "RSS" }}
         {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
-    {{ end }}
+    {{- end }}
 
     {{- /* Point the alternative output formats. */ -}}
     {{- range .AlternativeOutputFormats }}
