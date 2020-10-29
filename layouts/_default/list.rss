@@ -42,7 +42,7 @@ The Atom specification, despite the terseness, is clearer than this which is why
     {{- if .IsHome }}
     {{- $pages = where $.Site.RegularPages "Type" "in" $.Site.Params.mainSections }}
     {{- end }}
-    {{- range first $limit (where $pages "Params.hidden" "!=" true) }}
+    {{- range first $limit $pages }}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>

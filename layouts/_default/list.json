@@ -22,7 +22,7 @@
         {{ $pages = where $.Site.RegularPages "Type" "in" $.Site.Params.mainSections }}
         {{ end }}
         {{- $.Scratch.Add "items" slice -}}
-        {{ range first $limit (where $pages "Params.hidden" "!=" true) }}
+        {{ range first $limit $pages }}
             {{- $.Scratch.Add "items" (dict "id" .Permalink "url" .Permalink "title" .Title "summary" (.Summary | safeHTML) "content_html" (.Content | safeHTML) "tags" .Params.tags "date_published" (.Date.Format "2006-01-02T15:04:05Z07:00"  | safeHTML) "date_modified" ( .Lastmod.Format "2006-01-02T15:04:05Z07:00"  | safeHTML ) ) -}}
         {{- end -}}
         {{- $.Scratch.Get "items" | jsonify -}}

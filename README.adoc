@@ -20,7 +20,16 @@ To get started using {doctitle}, here is the section giving you a headstart.
 ==== The theme folder
 
 You can simply copy the project into your theme folder (e.g., `themes/web-feeds`).
-Then, simply specify the theme component to be used in the site configuration.
+Since this project is in a Git repo, you can simply clone it.
+
+[source, shell]
+----
+git clone https://github.com/foo-dogsquared/hugo-web-feeds themes/web-feeds
+----
+
+If you intend to vendor it for your own modifications (since this module does not cover everything), you can store the project as a https://git-scm.com/book/en/v2/Git-Tools-Submodules[Git submodule] (e.g., `git submodule add $GIT_REPO themes/web-feeds`).
+
+Then, specify the theme component to be used in the site configuration.
 Since this is a theme component, you're not going to use this as a standalone theme.
 
 [source, toml]
@@ -51,6 +60,8 @@ For more information, you can see https://github.com/golang/go/wiki/Modules#how-
 Next, get the dependency by running `hugo mod get`.
 Note that this will update the created `go.mod` file.
 To update the theme component, run `hugo mod get -u`.
+
+If you intend to vendor this module, execute `hugo mod vendor` and it will be stored on `_vendor/` (by default).
 
 
 === Using it in the Hugo site
@@ -115,8 +126,8 @@ footnote:[Redirecting them with a "Read more" link still has valid reasons such 
 * Custom parameters are present in the templates though used minimally.
 
 ** `$.Site.Params.mainSections` (list of strings) assumes the sections to be included in the homepage feed.
-** `$POST.Params.hidden` (boolean) indicates if a post is to be hidden in the feed.
 ** `$POST.Params.tags` (list of strings) lists the categories to be listed in the feed (if it has any).
+** `$POST.Params.copyright` (string) indicates the copyright (or copyleft) terms of the published content.
 
 * Images are assumed to be in hardcoded path.
 

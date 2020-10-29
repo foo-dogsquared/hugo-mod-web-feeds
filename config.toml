@@ -1,5 +1,9 @@
 # Configuring with this theme component reduces the user configuration.
 # Though, the user is still encourage to skim this configuration to know what configuration this component has set.
+[module]
+    [module.hugoVersion]
+        extended = false
+        min = "0.65.0"
 
 # RSS configuration
 [mediatypes."application/rss+xml"]

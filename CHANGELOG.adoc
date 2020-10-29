@@ -10,6 +10,22 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 
 
 
+== [Unreleased]
+
+=== Changed
+
+* Update the documentation.
+Also, forgot some to-be documented stuff such as the `copyright` parameter for content frontmatter.
+
+
+=== Removed
+
+* `$POST.Params.hidden` has been removed in favor the http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/[build options].
+Though, now this requires the module to be at Hugo v0.65.0 onwards.
+
+
+
+
 == [0.0.1] - 2020-10-21
 
 === Added

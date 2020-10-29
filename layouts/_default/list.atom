@@ -31,7 +31,7 @@
   {{- if .IsHome -}}
   {{- $pages = where $.Site.RegularPages "Type" "in" $.Site.Params.mainSections -}}
   {{- end -}}
-  {{- range first $limit (where $pages "Params.hidden" "!=" true) -}}
+  {{- range first $limit $pages -}}
   <entry>
     <id>{{ .Permalink }}</id>
     <title type="text">{{ .Title }}</title>
