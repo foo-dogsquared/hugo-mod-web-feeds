@@ -34,7 +34,7 @@ Since this is a theme component, you're not going to use this as a standalone th
 
 [source, toml]
 ----
-theme = [ "web-feeds" "$THEME" ]
+theme = [ "web-feeds", "$THEME" ]
 ----
 
 
